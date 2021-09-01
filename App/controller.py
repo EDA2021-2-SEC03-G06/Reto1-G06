@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from os import read
 import config as cf
 import model
 import csv
@@ -30,9 +31,20 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
-
+def InitCatalog():
+    return model.NewCatalog
 # Funciones para la carga de datos
+def loadArtist(catalogo):
+    booksfile = cf.data_dir + "Data/Artists-utf8-small.csv"
+    file = csv.DictReader(open(booksfile,encoding = "uft-8"))
+    for Artist in file :
+        model.addArtist(catalogo,Artist)
 
+def loadArtwork(catalogo):
+    booksfile = cf.data_dir + "Data/Artworks-utf8-small.csv"
+    file = csv.DictReader(open(booksfile,encoding = "uft-8"))
+    for Artwork in file :
+        model.addArtwork(catalogo,Artwork)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
