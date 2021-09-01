@@ -58,8 +58,14 @@ while True:
         catalogo = controller.InitCatalog()
         controller.loadArtist(catalogo)
         controller.loadArtwork(catalogo)
+        print(lt.getElement(catalogo["Artista"],lt.size(catalogo["Artista"])))
+        print(lt.getElement(catalogo["Artista"],lt.size(catalogo["Artista"])-1))
+        print(lt.getElement(catalogo["Artista"],lt.size(catalogo["Artista"])-2))
+        print(lt.getElement(catalogo["Obra"],lt.size(catalogo["Artista"])))
+        print(lt.getElement(catalogo["Obra"],lt.size(catalogo["Artista"])-1))
+        print(lt.getElement(catalogo["Obra"],lt.size(catalogo["Artista"])-2))
         print("Se cargaron " + str(lt.size(catalogo["Artista"]))+" artistas")
-        print("Se cargaron " + str(lt.size(catalogo["Obras"]))+" obras")
+        print("Se cargaron " + str(lt.size(catalogo["Obra"]))+" obras")
     elif int(inputs[0]) == 2:
         pass
 

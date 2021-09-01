@@ -32,7 +32,7 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 def InitCatalog():
-    return model.NewCatalog
+    return model.NewCatalog()
 # Funciones para la carga de datos
 def loadArtist(catalogo):
     booksfile = cf.data_dir + "Artists-utf8-small.csv"

@@ -46,7 +46,7 @@ def NewCatalog():
 def addArtist(catalogo,Artist):
     lt.addLast(catalogo["Artista"],Artist)
 def addArtwork(catalogo,Artwork):
-    lt.addLast(catalogo["Artista"],Artwork)
+    lt.addLast(catalogo["Obra"],Artwork)
 # Funciones para creacion de datos
 
 # Funciones de consulta
