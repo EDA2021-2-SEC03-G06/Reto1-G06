@@ -37,7 +37,13 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Listado cronologico de artistas")
+    print("3- Listado cronologico de adquisiciones")
+    print("4- Clasificar las obras de un artista por tecnica")
+    print("5- Clasificar obras por nacionalidad de sus creadores")
+    print("6- Mover Obra de un departamento")
+    print("7- Proponer una nueva exposición")
+    print("0- Salir")
 
 catalog = None
 
@@ -49,7 +55,11 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalogo = controller.InitCatalog()
+        controller.loadArtist(catalogo)
+        controller.loadArtwork(catalogo)
+        print("Se cargaron " + str(lt.size(catalogo["Artista"]))+" artistas")
+        print("Se cargaron " + str(lt.size(catalogo["Obras"]))+" obras")
     elif int(inputs[0]) == 2:
         pass
 
