@@ -28,6 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+import datetime as dt
 assert cf
 
 """
@@ -48,7 +49,8 @@ def addArtist(catalogo,Artist):
 def addArtwork(catalogo,Artwork):
     lt.addLast(catalogo["Obra"],Artwork)
 # Funciones para creacion de datos
-
+def dateartwork(año_inicial,año_final):
+    
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
