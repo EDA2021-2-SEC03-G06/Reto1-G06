@@ -46,5 +46,6 @@ def loadArtwork(catalogo):
     for Artwork in file :
         model.addArtwork(catalogo,Artwork)
 # Funciones de ordenamiento
-
+def initdateartist(año_inicio,año_final):
+    return model.dateartist
 # Funciones de consulta sobre el catálogo

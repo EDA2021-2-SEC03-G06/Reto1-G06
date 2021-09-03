@@ -67,7 +67,9 @@ while True:
         print("Se cargaron " + str(lt.size(catalogo["Artista"]))+" artistas")
         print("Se cargaron " + str(lt.size(catalogo["Obra"]))+" obras")
     elif int(inputs[0]) == 2:
-        pass
+        año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
+        año_final = int(input("Ingrese el año en el que desea terminar: "))
+        print(controller.Initdateartist(año_inicio,año_final))
 
     else:
         sys.exit(0)
