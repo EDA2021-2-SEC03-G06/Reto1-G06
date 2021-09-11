@@ -28,7 +28,10 @@
 from DISClib.DataStructures.arraylist import getElement
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.Algorithms import Sorting as sa
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Sorting import quicksort as qs
+from DISClib.Algorithms.Sorting import shellsort as ss
 import datetime as dt
 import time as chronos
 assert cf
@@ -66,36 +69,36 @@ def ArtworkvArtist(nombre_artista,catalogo):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def compareDateAcquired(obra1,obra2):
-    return (float(obra1["DateAcquired"])> float(obra2["DateAcquired"]))
+    return (dt.datetime.strftime(obra1["DateAcquired"],) > dt.datetime.strftime(obra2["DateAcquired"],))
 # Funciones de ordenamiento
 def insertion_sort(catalogo,size):
-    sub_list = lt.subList(catalogo["obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size)
     start_time = chronos.process_time()
-    sorted_list = sa.insertionsort.sort(sub_list,compareDateAcquired)
+    sorted_list = ins.sort(sub_list,compareDateAcquired)
     stop_time = chronos.process_time()
     time = (stop_time - start_time)*1000
     return (time,sorted_list)
 
 def merge_sort(catalogo,size):
-    sub_list = lt.subList(catalogo["obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size).copy
     start_time = chronos.process_time()
-    sorted_list = sa.mergesort.sort(sub_list,compareDateAcquired)
+    sorted_list = ms.sort(sub_list,compareDateAcquired)
     stop_time = chronos.process_time()
     time = (stop_time - start_time)*1000
     return (time,sorted_list)
 
 def quick_sort(catalogo,size):
-    sub_list = lt.subList(catalogo["obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size).copy
     start_time = chronos.process_time()
-    sorted_list = sa.quicksort.sort(sub_list,compareDateAcquired)
+    sorted_list = qs.sort(sub_list,compareDateAcquired)
     stop_time = chronos.process_time()
     time = (stop_time - start_time)*1000
     return (time,sorted_list)
 
 def shell_sort(catalogo,size):
-    sub_list = lt.subList(catalogo["obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size).copy
     start_time = chronos.process_time()
-    sorted_list = sa.shellsort.sort(sub_list,compareDateAcquired)
+    sorted_list = ss.sort(sub_list,compareDateAcquired)
     stop_time = chronos.process_time()
     time = (stop_time - start_time)*1000
     return (time,sorted_list)
