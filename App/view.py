@@ -43,6 +43,7 @@ def printMenu():
     print("5- Clasificar obras por nacionalidad de sus creadores")
     print("6- Mover Obra de un departamento")
     print("7- Proponer una nueva exposición")
+    print("8- Organizar una muestra de obras por fecha")
     print("0- Salir")
 
 catalog = None
@@ -71,6 +72,15 @@ while True:
         año_final = input("Ingrese el año en el que desea terminar: ")
         print(controller.Initdateartist(año_inicio,año_final))
 
+    elif int(inputs[0]) == 8:
+        print("¿Que Algoritmo desea utilizar?")
+        print("1- Insertion Sort")
+        print("2- Merge Sort")
+        print("3- Quick Sort")
+        print("4- Shell Sort")
+        ordenamiento = int(input("Ingrese el algoritmo que le interesa: "))
+        size = int(input("Cuantos datos le interesa tomar: "))
+        time, sorted_list = controller.initordenamiento(catalogo,ordenamiento,size)
     else:
         sys.exit(0)
 sys.exit(0)

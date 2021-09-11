@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from DISClib.ADT.list import size
 from os import read
 import config as cf
 import model
@@ -46,6 +47,16 @@ def loadArtwork(catalogo):
     for Artwork in file :
         model.addArtwork(catalogo,Artwork)
 # Funciones de ordenamiento
+def initordenamiento(catalogo,ordenamiento,size):
+    if ordenamiento == 1:
+        orden = model.insertion_sort(catalogo,size)
+    elif ordenamiento == 2:
+        orden = model.merge_sort(catalogo,size)
+    elif ordenamiento == 3:
+        orden = model.quick_sort(catalogo,size)
+    elif ordenamiento == 4:
+        orden = model.shell_sort(catalogo,size)
+    return orden    
+# Funciones de consulta sobre el catálogo
 def initdateartist(año_inicio,año_final,catalogo):
     return model.dateartist(año_inicio,año_final,catalogo)
-# Funciones de consulta sobre el catálogo
