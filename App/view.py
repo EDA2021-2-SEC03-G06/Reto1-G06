@@ -81,6 +81,8 @@ while True:
         ordenamiento = int(input("Ingrese el algoritmo que le interesa: "))
         size = int(input("Cuantos datos le interesa tomar: "))
         time, sorted_list = controller.initordenamiento(catalogo,ordenamiento,size)
+        print("El proceso tardo: ", time, "ms")
+        print("El resultado fue:\n",sorted_list)
     else:
         sys.exit(0)
 sys.exit(0)
