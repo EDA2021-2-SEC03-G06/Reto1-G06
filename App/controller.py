@@ -60,3 +60,7 @@ def initordenamientodataAdquire(catalogo,ordenamiento,size):
 # Funciones de consulta sobre el catálogo
 def initdateartist(año_inicio,año_final,catalogo):
     return model.dateartist(año_inicio,año_final,catalogo)
+def initdateartwork(año_inicio,año_final,catalogo):
+    return model.dateArtwork(año_inicio,año_final,catalogo)
+def initArtworkvArtist(nombre_artista,catalogo):
+    return model.ArtworkvArtist(nombre_artista,catalogo)

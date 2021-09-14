@@ -67,11 +67,47 @@ while True:
         print(lt.getElement(catalogo["Obra"],lt.size(catalogo["Artista"])-2))
         print("Se cargaron " + str(lt.size(catalogo["Artista"]))+" artistas")
         print("Se cargaron " + str(lt.size(catalogo["Obra"]))+" obras")
+    
     elif int(inputs[0]) == 2:
         año_inicio = input("Ingrese el año en el que desea iniciar: ")
         año_final = input("Ingrese el año en el que desea terminar: ")
         print(controller.Initdateartist(año_inicio,año_final))
-
+    
+    elif int(inputs[0]) == 3:
+        año_inicio = input("Ingrese el año en el que desea iniciar: ")
+        año_final = input("Ingrese el año en el que desea terminar: ")
+        total_obras,purchase,primeras_3,ultimas_3 = controller.initdateartwork(año_inicio,año_inicio,catalogo)
+        print("En esas fechas ubo: ",total_obras," obras")
+        print("De esas obras ",purchase," fueron compradas")
+        print("¡¡PRIMEROS 3!!")
+        for obra in primeras_3:
+            print("*"*25)
+            print("Titulo : ", obra["Title"])
+            print("Fecha : ", obra["Date"])
+            print("Medio : ", obra["Medium"])
+            print("Dimensiones : ",obra["Dimensions"])
+        print("¡¡ULTIMAS 3!!")
+        for obra in ultimas_3:
+            print("*"*25)
+            print("Titulo : ",obra["Title"])
+            print("Fecha : ",obra["Date"])
+            print("Medio : ",obra["Medium"])
+            print("Dimensiones : ",obra["Dimensions"])
+    
+    elif int(inputs[0]) == 4:
+        nombre_artista = input("Ingrese el nombre del artista: ")
+        total_obras,total_tecnicas,tecnica_usada,obras_tecnica = controller.initArtworkvArtist(nombre_artista,catalogo)
+        print(nombre_artista," hizo ",total_obras," obras")
+        print(nombre_artista," uso ", total_tecnicas," tecnicas")
+        print(nombre_artista," usaba mayormente ",tecnica_usada," como tecnica")
+        for obra in obras_tecnica:
+            print("*"*25)
+            print("Titulo : ",obra["Title"])
+            print("Fecha : ",obra["Date"])
+            print("Medio : ",obra["Medium"])
+            print("Dimensiones : ",obra["Dimensions"])
+    
+    
     elif int(inputs[0]) == 8:
         print("¿Que Algoritmo desea utilizar?")
         print("1- Insertion Sort")
