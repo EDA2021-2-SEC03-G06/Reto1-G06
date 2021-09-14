@@ -56,14 +56,29 @@ def addArtwork(catalogo,Artwork):
     lt.addLast(catalogo["Obra"],Artwork)
 # Funciones para creacion de datos
 def ArtworkvArtist(nombre_artista,catalogo):
-    obras_artista = lt.newList(cmpfunction="Medium")
+    obras_artista = {}
+    total_obras = 0
+    total_medios = 0
     posicion = 0
     while posicion < lt.size(catalogo["Artist"]) and nombre_artista != lt.getElement(catalogo["Artista"],posicion)["DisplayName"]:
         posicion += 1
     constituenID_artista = lt.getElement(catalogo["Artista"],posicion)["ConstituentID"]
     for obra in catalogo["Obra"]:
         if obra["ConstituentID"] == constituenID_artista:
-            lt.addLast(obras_artista, obra)
+            if obra["Medium"] in obras_artista:
+                lt.addlast(obras_artista[obra["Medium"]],obra)
+            else:
+                obras_artista[obra["Medium"]] = lt.newList()
+                lt.addLast(obras_artista[obra["Medium"]],obra["Medium"])
+                total_medios += 1
+            total_obras += 1
+    medio_n = 0
+    nombre = ""
+    for llave in obras_artista.keys:
+        if lt.size(obras_artista[llave]) > medio_n:
+            medio_n = lt.size(obras_artista[llave])
+            nombre = llave
+    return (total_obras,total_medios,nombre,obras_artista[nombre])
     
 # Funciones de consulta
 def dateArtwork(fecha_inicio,fecha_fin,catalogo):
@@ -71,7 +86,6 @@ def dateArtwork(fecha_inicio,fecha_fin,catalogo):
     obras_purchase = 0
     for obra in catalogo["Obra"]:
         fecha = obra["Date"]
-        #TODO Limpiar los datos
         if dt.datetime.strptime(fecha,"%Y") > fecha_inicio and dt.datetime.strptime(fecha,"%Y") > fecha_fin:
             lt.addLast(obras_rango,obra)
             if obra["CreditLine"] == "Purchase":
