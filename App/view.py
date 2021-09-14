@@ -80,7 +80,7 @@ while True:
         print("4- Shell Sort")
         ordenamiento = int(input("Ingrese el algoritmo que le interesa: "))
         size = int(input("Cuantos datos le interesa tomar: "))
-        time, sorted_list = controller.initordenamiento(catalogo,ordenamiento,size)
+        time, sorted_list = controller.initordenamientodataAdquire(catalogo,ordenamiento,size)
         print("El proceso tardo: ", time, "ms")
         print("El resultado fue:\n",sorted_list)
     else:
