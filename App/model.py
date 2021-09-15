@@ -81,6 +81,21 @@ def ArtworkvArtist(nombre_artista,catalogo):
     return (total_obras,total_medios,nombre,obras_artista[nombre])
     
 # Funciones de consulta
+def dateartist(año_inicio,año_final,catalogo):
+    aux = catalogo["Artista"]
+    artistas_rango = lt.newList()
+    cantidad = 0
+    n = 0
+
+    while n < 14:
+        artista= lt.getElement(aux,n)
+        nacimiento = int(artista["BeginDate"])
+        lt.addLast(artistas_rango,nacimiento)
+        n+=1
+    return artistas_rango
+
+
+
 def dateArtwork(fecha_inicio,fecha_fin,catalogo):
     obras_rango = lt.newList
     obras_purchase = 0
@@ -95,7 +110,11 @@ def dateArtwork(fecha_inicio,fecha_fin,catalogo):
     return(tamaño,obras_purchase,lt.subList(obras_sorted,1,3),lt.subList(obras_sorted,lt.size(obras_sorted)-3))
 # Funciones utilizadas para comparar elementos dentro de una lista
 def compareDateAcquired(obra1,obra2):
-    return (dt.datetime.strptime(obra1["DateAcquired"],"%Y-%m-%d") > dt.datetime.strptime(obra2["DateAcquired"],"%Y-%m-%d"))
+    if (obra1["DateAcquired"]!="") and (obra2["DateAcquired"]!=""):
+        return (dt.datetime.strptime(obra1["DateAcquired"],"%Y-%m-%d") > dt.datetime.strptime(obra2["DateAcquired"],"%Y-%m-%d"))
+    else:
+        return None
+
 def compareData(obra1,obra2):
     return (dt.datetime.strptime(obra1["ate"],"%Y") > dt.datetime.strptime(obra2["Date"],"%Y"))
 # Funciones de ordenamiento
