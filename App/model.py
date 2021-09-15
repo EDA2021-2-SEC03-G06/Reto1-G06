@@ -60,7 +60,7 @@ def ArtworkvArtist(nombre_artista,catalogo):
     total_obras = 0
     total_medios = 0
     posicion = 0
-    while posicion < lt.size(catalogo["Artist"]) and nombre_artista != lt.getElement(catalogo["Artista"],posicion)["DisplayName"]:
+    while posicion < lt.size(catalogo["Artista"]) and nombre_artista != lt.getElement(catalogo["Artista"],posicion)["DisplayName"]:
         posicion += 1
     constituenID_artista = lt.getElement(catalogo["Artista"],posicion)["ConstituentID"]
     for obra in catalogo["Obra"]:
@@ -97,7 +97,7 @@ def dateArtwork(fecha_inicio,fecha_fin,catalogo):
 def compareDateAcquired(obra1,obra2):
     return (dt.datetime.strptime(obra1["DateAcquired"],"%Y-%m-%d") > dt.datetime.strptime(obra2["DateAcquired"],"%Y-%m-%d"))
 def compareData(obra1,obra2):
-    return (dt.datetime.strptime(obra1["Date"],"%Y") > dt.datetime.strptime(obra2["Date"],"%Y"))
+    return (dt.datetime.strptime(obra1["ate"],"%Y") > dt.datetime.strptime(obra2["Date"],"%Y"))
 # Funciones de ordenamiento
 def insertion_sort(catalogo,size,cmpfuncion):
     sub_list = lt.subList(catalogo["Obra"], 1, size)
@@ -108,7 +108,7 @@ def insertion_sort(catalogo,size,cmpfuncion):
     return (time,sorted_list)
 
 def merge_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size)
     start_time = chronos.process_time()
     sorted_list = ms.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()
@@ -116,7 +116,7 @@ def merge_sort(catalogo,size,cmpfuncion):
     return (time,sorted_list)
 
 def quick_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size)
     start_time = chronos.process_time()
     sorted_list = qs.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()
@@ -124,7 +124,7 @@ def quick_sort(catalogo,size,cmpfuncion):
     return (time,sorted_list)
 
 def shell_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size).copy
+    sub_list = lt.subList(catalogo["Obra"], 1, size)
     start_time = chronos.process_time()
     sorted_list = ss.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()
