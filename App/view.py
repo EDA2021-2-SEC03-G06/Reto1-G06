@@ -26,6 +26,8 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 """
 La vista se encarga de la interacción con el usuario
@@ -46,7 +48,7 @@ def printMenu():
     print("8- Organizar una muestra de obras por fecha")
     print("0- Salir")
 
-catalog = None
+catalogo = None
 
 """
 Menu principal
@@ -117,8 +119,8 @@ while True:
         ordenamiento = int(input("Ingrese el algoritmo que le interesa: "))
         size = int(input("Cuantos datos le interesa tomar: "))
         time, sorted_list = controller.initordenamientodataAdquire(catalogo,ordenamiento,size)
-        print("El proceso tardo: ", time, "ms")
         print("El resultado fue:\n",sorted_list)
+        print("El proceso tardo: ", time, "ms")
     else:
         sys.exit(0)
 sys.exit(0)
