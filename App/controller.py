@@ -49,13 +49,13 @@ def loadArtwork(catalogo):
 # Funciones de ordenamiento
 def initordenamientodataAdquire(catalogo,ordenamiento,size):
     if ordenamiento == 1:
-        orden = model.insertion_sort(catalogo,size,model.compareDateAcquired)
+        orden = model.insertion_sort(catalogo["Obra"],size,model.compareDateAcquired)
     elif ordenamiento == 2:
-        orden = model.merge_sort(catalogo,size,model.compareDateAcquired)
+        orden = model.merge_sort(catalogo["Obra"],size,model.compareDateAcquired)
     elif ordenamiento == 3:
-        orden = model.quick_sort(catalogo,size,model.compareDateAcquired)
+        orden = model.quick_sort(catalogo["Obra"],size,model.compareDateAcquired)
     elif ordenamiento == 4:
-        orden = model.shell_sort(catalogo,size,model.compareDateAcquired)
+        orden = model.shell_sort(catalogo["Obra"],size,model.compareDateAcquired)
     return orden    
 # Funciones de consulta sobre el catálogo
 def initdateartist(año_inicio,año_final,catalogo):

@@ -25,7 +25,7 @@
  """
 
 
-from DISClib.DataStructures.arraylist import getElement, size
+from DISClib.DataStructures.arraylist import addLast, getElement, size
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import insertionsort as ins
@@ -63,7 +63,12 @@ def ArtworkvArtist(nombre_artista,catalogo):
     while posicion < lt.size(catalogo["Artista"]) and nombre_artista != lt.getElement(catalogo["Artista"],posicion)["DisplayName"]:
         posicion += 1
     constituenID_artista = lt.getElement(catalogo["Artista"],posicion)["ConstituentID"]
-    for obra in catalogo["Obra"]:
+    print("ENCONTRADO!")
+    posicion = 0
+    #while posicion < lt.size(catalogo["Obra"]):
+    while posicion < 10000:
+        obra = lt.getElement(catalogo["Obra"],posicion)
+        print(posicion)
         if obra["ConstituentID"] == constituenID_artista:
             if obra["Medium"] in obras_artista:
                 lt.addlast(obras_artista[obra["Medium"]],obra)
@@ -72,9 +77,11 @@ def ArtworkvArtist(nombre_artista,catalogo):
                 lt.addLast(obras_artista[obra["Medium"]],obra["Medium"])
                 total_medios += 1
             total_obras += 1
+        posicion += 1
+    print(obras_artista)
     medio_n = 0
     nombre = ""
-    for llave in obras_artista.keys:
+    for llave in obras_artista:
         if lt.size(obras_artista[llave]) > medio_n:
             medio_n = lt.size(obras_artista[llave])
             nombre = llave
@@ -97,17 +104,33 @@ def dateartist(año_inicio,año_final,catalogo):
 
 
 def dateArtwork(fecha_inicio,fecha_fin,catalogo):
-    obras_rango = lt.newList
+    obras_rango = lt.newList()
     obras_purchase = 0
-    for obra in catalogo["Obra"]:
+    posicion = 0
+    while posicion < lt.size(catalogo["Obra"]):
+        obra = lt.getElement(catalogo["Obra"],posicion)
         fecha = obra["Date"]
-        if dt.datetime.strptime(fecha,"%Y") > fecha_inicio and dt.datetime.strptime(fecha,"%Y") > fecha_fin:
+        if fecha == "":
+            fecha = -1
+        if int(fecha) > fecha_inicio and int(fecha) < fecha_fin:
             lt.addLast(obras_rango,obra)
             if obra["CreditLine"] == "Purchase":
                 obras_purchase += 1
+        posicion += 1
     tamaño = lt.size(obras_rango)
-    obras_sorted = shell_sort(obras_rango,tamaño,compareData)
-    return(tamaño,obras_purchase,lt.subList(obras_sorted,1,3),lt.subList(obras_sorted,lt.size(obras_sorted)-3))
+    print("entrando en la parte dura: ")
+    obras_sorted = merge_sort(obras_rango,tamaño,compareData)
+    obras_sorted = obras_sorted[1]
+    primeras_3 = lt.newList()
+    lt.addLast(primeras_3,lt.getElement(obras_sorted,lt.size(obras_sorted)))
+    lt.addLast(primeras_3,lt.getElement(obras_sorted,lt.size(obras_sorted)-1))
+    lt.addLast(primeras_3,lt.getElement(obras_sorted,lt.size(obras_sorted)-2))
+    ultimos_3 = lt.newList()
+    lt.addLast(primeras_3,lt.getElement(obras_sorted,2))
+    lt.addLast(primeras_3,lt.getElement(obras_sorted,1))
+    lt.addLast(primeras_3,lt.getElement(obras_sorted,0))
+    return(tamaño, obras_purchase,primeras_3,ultimos_3)
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 def compareDateAcquired(obra1,obra2):
     if (obra1["DateAcquired"]!="") and (obra2["DateAcquired"]!=""):
@@ -116,10 +139,13 @@ def compareDateAcquired(obra1,obra2):
         return None
 
 def compareData(obra1,obra2):
-    return (dt.datetime.strptime(obra1["ate"],"%Y") > dt.datetime.strptime(obra2["Date"],"%Y"))
+    if (obra1["Date"]!="") and (obra2["Date"]!=""):
+        return (int(obra1["Date"]) > int(obra2["Date"]))
+    else:
+        return None
 # Funciones de ordenamiento
 def insertion_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size)
+    sub_list = lt.subList(catalogo, 1, size)
     start_time = chronos.process_time()
     sorted_list = ins.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()
@@ -127,7 +153,7 @@ def insertion_sort(catalogo,size,cmpfuncion):
     return (time,sorted_list)
 
 def merge_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size)
+    sub_list = lt.subList(catalogo, 1, size)
     start_time = chronos.process_time()
     sorted_list = ms.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()
@@ -135,7 +161,7 @@ def merge_sort(catalogo,size,cmpfuncion):
     return (time,sorted_list)
 
 def quick_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size)
+    sub_list = lt.subList(catalogo, 1, size)
     start_time = chronos.process_time()
     sorted_list = qs.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()
@@ -143,7 +169,7 @@ def quick_sort(catalogo,size,cmpfuncion):
     return (time,sorted_list)
 
 def shell_sort(catalogo,size,cmpfuncion):
-    sub_list = lt.subList(catalogo["Obra"], 1, size)
+    sub_list = lt.subList(catalogo, 1, size)
     start_time = chronos.process_time()
     sorted_list = ss.sort(sub_list,cmpfuncion)
     stop_time = chronos.process_time()

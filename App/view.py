@@ -56,7 +56,7 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    if int(inputs) == 1:
         print("Cargando información de los archivos ....")
         catalogo = controller.InitCatalog()
         controller.loadArtist(catalogo)
@@ -70,47 +70,54 @@ while True:
         print("Se cargaron " + str(lt.size(catalogo["Artista"]))+" artistas")
         print("Se cargaron " + str(lt.size(catalogo["Obra"]))+" obras")
     
-    elif int(inputs[0]) == 2:
+    elif int(inputs) == 2:
         año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
         año_final = int(input("Ingrese el año en el que desea terminar: "))
         print(controller.initdateartist(año_inicio,año_final,catalogo))
     
-    elif int(inputs[0]) == 3:
-        año_inicio = input("Ingrese el año en el que desea iniciar: ")
-        año_final = input("Ingrese el año en el que desea terminar: ")
-        total_obras,purchase,primeras_3,ultimas_3 = controller.initdateartwork(año_inicio,año_inicio,catalogo)
+    elif int(inputs) == 3:
+        año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
+        año_final = int(input("Ingrese el año en el que desea terminar: "))
+        total_obras, purchase, primeras_3,ultimas_3 = controller.initdateartwork(año_inicio,año_final,catalogo)
         print("En esas fechas ubo: ",total_obras," obras")
         print("De esas obras ",purchase," fueron compradas")
         print("¡¡PRIMEROS 3!!")
-        for obra in primeras_3:
-            print("*"*25)
+        posicion = 1
+        while posicion <= lt.size(primeras_3):
+            obra = lt.getElement(primeras_3,posicion)
+            print("*"*50)
             print("Titulo : ", obra["Title"])
             print("Fecha : ", obra["Date"])
             print("Medio : ", obra["Medium"])
             print("Dimensiones : ",obra["Dimensions"])
+            posicion += 1
+        posicion = 1
         print("¡¡ULTIMAS 3!!")
-        for obra in ultimas_3:
-            print("*"*25)
+        while posicion <= lt.size(ultimas_3):
+            obra = lt.getElement(ultimas_3,posicion)
+            print("*"*50)
             print("Titulo : ",obra["Title"])
             print("Fecha : ",obra["Date"])
             print("Medio : ",obra["Medium"])
             print("Dimensiones : ",obra["Dimensions"])
-    
-    elif int(inputs[0]) == 4:
+            posicion += 1
+    elif int(inputs) == 4:
         nombre_artista = input("Ingrese el nombre del artista: ")
         total_obras,total_tecnicas,tecnica_usada,obras_tecnica = controller.initArtworkvArtist(nombre_artista,catalogo)
         print(nombre_artista," hizo ",total_obras," obras")
         print(nombre_artista," uso ", total_tecnicas," tecnicas")
         print(nombre_artista," usaba mayormente ",tecnica_usada," como tecnica")
-        for obra in obras_tecnica:
+        while posicion < lt.size(obras_tecnica):
+            obra = lt.getElement(obras_tecnica,posicion)
             print("*"*25)
             print("Titulo : ",obra["Title"])
             print("Fecha : ",obra["Date"])
             print("Medio : ",obra["Medium"])
             print("Dimensiones : ",obra["Dimensions"])
+            posicion += 1
     
     
-    elif int(inputs[0]) == 8:
+    elif int(inputs) == 8:
         print("¿Que Algoritmo desea utilizar?")
         print("1- Insertion Sort")
         print("2- Merge Sort")
