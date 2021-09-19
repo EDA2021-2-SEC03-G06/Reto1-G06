@@ -116,7 +116,38 @@ while True:
             print("Dimensiones : ",obra["Dimensions"])
             posicion += 1
     
-    
+    elif int(inputs) == 7:
+        año_inicio = int(input("En que año desea iniciar: "))
+        año_fin = int(input("En que año desea terminar: "))
+        area = float(input("Con cuanta area cuenta: "))
+        total_obras,area_usada,primeras_5,ultimas_5 = controller.initnuevaexpo(catalogo,año_inicio,año_fin,area)
+        print("La exposicion tendria ",total_obras," en total")
+        print("La exposicion usarias ", area_usada, "m**2")
+        print("¡¡¡PRIMERAS 5!!!")
+        posicion = 1
+        while posicion <= lt.size(primeras_5):
+            obra = lt.getElement(primeras_5,posicion)
+            print("*"*50)
+            print("Titulo : ", obra["Title"])
+            print("Artista: ", controller.encontrar_artista(catalogo,obra["ConstituentID"]))
+            print("Fecha : ", obra["Date"])
+            print("Clasificacion: ", obra["Classification"])
+            print("Medio : ", obra["Medium"])
+            print("Dimensiones : ",obra["Dimensions"])
+            posicion += 1
+        posicion = 1
+        print("¡¡ULTIMAS 5!!")
+        while posicion <= lt.size(ultimas_5):
+            obra = lt.getElement(ultimas_5,posicion)
+            print("*"*50)
+            print("Titulo : ", obra["Title"])
+            print("Artista: ", controller.encontrar_artista(catalogo,obra["ConstituentID"]))
+            print("Fecha : ", obra["Date"])
+            print("Clasificacion: ", obra["Classification"])
+            print("Medio : ", obra["Medium"])
+            print("Dimensiones : ",obra["Dimensions"])
+            posicion += 1
+
     elif int(inputs) == 8:
         print("¿Que Algoritmo desea utilizar?")
         print("1- Insertion Sort")

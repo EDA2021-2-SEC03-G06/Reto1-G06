@@ -25,6 +25,7 @@
  """
 
 
+from os import replace
 from DISClib.DataStructures.arraylist import addLast, getElement, size
 import config as cf
 from DISClib.ADT import list as lt
@@ -34,6 +35,7 @@ from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import shellsort as ss
 import datetime as dt
 import time as chronos
+import math
 assert cf
 
 
@@ -63,10 +65,9 @@ def ArtworkvArtist(nombre_artista,catalogo):
     while posicion < lt.size(catalogo["Artista"]) and nombre_artista != lt.getElement(catalogo["Artista"],posicion)["DisplayName"]:
         posicion += 1
     constituenID_artista = lt.getElement(catalogo["Artista"],posicion)["ConstituentID"]
-    print("ENCONTRADO!")
+    constituenID_artista = "[" + constituenID_artista + "]"
     posicion = 0
-    #while posicion < lt.size(catalogo["Obra"]):
-    while posicion < 10000:
+    while posicion < lt.size(catalogo["Obra"]):
         obra = lt.getElement(catalogo["Obra"],posicion)
         print(posicion)
         if obra["ConstituentID"] == constituenID_artista:
@@ -130,6 +131,50 @@ def dateArtwork(fecha_inicio,fecha_fin,catalogo):
     lt.addLast(primeras_3,lt.getElement(obras_sorted,1))
     lt.addLast(primeras_3,lt.getElement(obras_sorted,0))
     return(tamaño, obras_purchase,primeras_3,ultimos_3)
+
+def nueva_expo(catalogo,año_inicio,año_fin,area):
+    obras_expo = lt.newList()
+    area_restante = area
+    posicion = 0
+    while posicion <= lt.size(catalogo["Obra"]) and area_restante > 0:
+        obra = lt.getElement(catalogo["Obra"],posicion)
+        if obra["Date"] != "" and int(obra["Date"]) > año_inicio and int(obra["Date"]) < año_fin:
+            diametro = obra["Diameter (cm)"]
+            largo = obra["Height (cm)"]
+            ancho = obra["Width (cm)"]
+            area_obra = -1
+            if diametro != "":
+                area_obra = math.pi * (float(diametro)/2)**2
+            elif largo != "" and ancho != "":
+                area_obra = float(largo) * float(ancho)
+            if area_obra != -1 and area_restante - area_obra >= 0:
+                lt.addLast(obras_expo,obra)
+                area_restante -= area_obra
+        posicion += 1
+    total_obras = lt.size(obras_expo)
+    obras_expo_sorted = merge_sort(obras_expo,total_obras,compareData)[1]
+    area_utilizada = (area - area_restante) * (1/10000)
+    primeras_5 = lt.newList()
+    lt.addLast(primeras_5,lt.getElement(obras_expo_sorted,lt.size(obras_expo_sorted)))
+    lt.addLast(primeras_5,lt.getElement(obras_expo_sorted,lt.size(obras_expo_sorted)-1))
+    lt.addLast(primeras_5,lt.getElement(obras_expo_sorted,lt.size(obras_expo_sorted)-2))
+    lt.addLast(primeras_5,lt.getElement(obras_expo_sorted,lt.size(obras_expo_sorted)-3))
+    lt.addLast(primeras_5,lt.getElement(obras_expo_sorted,lt.size(obras_expo_sorted)-4))
+    ultimas_5 = lt.newList()
+    lt.addLast(ultimas_5,lt.getElement(obras_expo_sorted,1))
+    lt.addLast(ultimas_5,lt.getElement(obras_expo_sorted,2))
+    lt.addLast(ultimas_5,lt.getElement(obras_expo_sorted,3))
+    lt.addLast(ultimas_5,lt.getElement(obras_expo_sorted,4))
+    lt.addLast(ultimas_5,lt.getElement(obras_expo_sorted,5))
+    return(total_obras,area_utilizada,primeras_5,ultimas_5)
+def encontrar_artista(catalogo,constituent_ID):
+    posicion = 0
+    while posicion < lt.size(catalogo["Artista"]) and constituent_ID != lt.getElement(catalogo["Artista"],posicion)["ConstituentID"]:
+        posicion += 1
+    artista = lt.getElement(catalogo["Artista"],posicion)["DisplayName"]
+    return artista
+
+            
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def compareDateAcquired(obra1,obra2):
