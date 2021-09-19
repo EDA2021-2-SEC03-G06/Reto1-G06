@@ -107,6 +107,7 @@ while True:
         print(nombre_artista," hizo ",total_obras," obras")
         print(nombre_artista," uso ", total_tecnicas," tecnicas")
         print(nombre_artista," usaba mayormente ",tecnica_usada," como tecnica")
+        posicion = 0
         while posicion < lt.size(obras_tecnica):
             obra = lt.getElement(obras_tecnica,posicion)
             print("*"*25)

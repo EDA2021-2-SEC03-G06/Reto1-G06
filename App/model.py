@@ -65,14 +65,16 @@ def ArtworkvArtist(nombre_artista,catalogo):
     while posicion < lt.size(catalogo["Artista"]) and nombre_artista != lt.getElement(catalogo["Artista"],posicion)["DisplayName"]:
         posicion += 1
     constituenID_artista = lt.getElement(catalogo["Artista"],posicion)["ConstituentID"]
+    print(constituenID_artista)
     constituenID_artista = "[" + constituenID_artista + "]"
+    print(constituenID_artista)
     posicion = 0
     while posicion < lt.size(catalogo["Obra"]):
         obra = lt.getElement(catalogo["Obra"],posicion)
         print(posicion)
         if obra["ConstituentID"] == constituenID_artista:
             if obra["Medium"] in obras_artista:
-                lt.addlast(obras_artista[obra["Medium"]],obra)
+                lt.addLast(obras_artista[obra["Medium"]],obra)
             else:
                 obras_artista[obra["Medium"]] = lt.newList()
                 lt.addLast(obras_artista[obra["Medium"]],obra["Medium"])
