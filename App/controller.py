@@ -57,6 +57,9 @@ def initordenamientodataAdquire(catalogo,ordenamiento,size):
     elif ordenamiento == 4:
         orden = model.shell_sort(catalogo["Obra"],size,model.compareDateAcquired)
     return orden    
+def initnuevaexpo(catalogo,año_inicio,año_fin,area):
+    area_cm = area * (10000)
+    return model.nueva_expo(catalogo,año_inicio,año_fin,area_cm)
 # Funciones de consulta sobre el catálogo
 def initdateartist(año_inicio,año_final,catalogo):
     return model.dateartist(año_inicio,año_final,catalogo)
