@@ -98,20 +98,22 @@ def ArtworkvNacionality(catalogo):
     pos = 1
 
     
-    while pos<=20:
+    while pos<=size:
         obra = lt.getElement(cat_obras,pos)
-        ID_artista = str(obra["ConstituentID"])[1:-1]
-        nacionalidad = nationality_artist(cat_artistas,ID_artista)
-        if nacionalidad not in obras_nacionalidad:
-            obras_nacionalidad[nacionalidad] = lt.newList()
-        lt.addLast(obras_nacionalidad[nacionalidad],obra)
-        print("se cargó " + nacionalidad)
+        ids=obra['ConstituentID']
+        ids=ids.replace(']','').replace('[','').split(',')
+        for id in ids:
+            nacionalidad = nationality_artist(cat_artistas,id)
+            if nacionalidad not in obras_nacionalidad:
+                obras_nacionalidad[nacionalidad] = lt.newList()
+            lt.addLast(obras_nacionalidad[nacionalidad],obra)
         pos+=1
 
     
     
-    orden=lt.newList()
+    orden=lt.newList("ARRAY_LIST")
     repe=lt.newList("ARRAY_LIST")
+    dic_top={}
     mayor=1000000
     n=1
     llave=""
@@ -126,14 +128,31 @@ def ArtworkvNacionality(catalogo):
                 mayor = valor
                 aux = valor
                 llave = "top " + str(n)
+                lt.addLast(orden,valor)
                 pais = i
-                orden[pais]=valor
+                dic_top[llave]=pais + " : " + str(valor)
+        if n == 1:
+            top_1 = pais
         lt.addLast(repe,pais)
         n+=1
+
+    n=5
+    while n>=1:
+        top = dic_top["top " + str(n)]
+        lt.addLast(orden,top)
+        n-=1
+
+    centinela = True
+    while centinela:
+        for i in obras_nacionalidad:
+            if i == top_1:
+                obras_top = obras_nacionalidad[i]
+                centinela = False
     
 
+
     
-    return obras_nacionalidad,orden, repe
+    return orden, obras_top
 
 
 # Funciones de consulta
@@ -207,20 +226,6 @@ def nationality_artist(catalogo,id):
         n+=1
 
     return nacionalidad
-
-"""
-def cantidad_artista(catalogo,id):
-    n = 0
-    pos = 0
-    while (lt.size(catalogo)>pos):
-        artista = lt.getElement(catalogo,n)
-        aux = artista["ConstituentID"]
-        if aux == id:
-            nacionalidad = artista["Nationality"]
-        n+=1
-
-    return nacionalidad
-"""
 
 
 def departmentArtworks(catalogo,departamento):
@@ -308,10 +313,6 @@ def departmentArtworks(catalogo,departamento):
 
     return obras_sorted
 # Funciones utilizadas para comparar elementos dentro de una lista
-def compareSize(obra1,obra2):
-    orden = (lt.size(obra1) > lt.size(obra2))
-    return orden
-
 def compareBeginDate(obra1,obra2):
     orden = None
     if (obra1["BeginDate"]!="") and (obra2["BeginDate"]!=""):

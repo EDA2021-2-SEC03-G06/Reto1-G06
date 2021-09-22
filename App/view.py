@@ -52,6 +52,7 @@ def printMenu():
 """
 Ejecución de funciones
 """
+
 def ejecutar_dateartist(catalogo):
     año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
     año_final = int(input("Ingrese el año en el que desea terminar: "))
@@ -86,8 +87,45 @@ def ejecutar_dateartist(catalogo):
         print("Género : ", artista["Gender"])
         n += 1
 
+
 def ejecutar_nacionalidad(catalogo):
-    print(controller.initArtwokvNationality(catalogo))
+    orden,obras_top = controller.initArtwokvNationality(catalogo)
+    print("El top 10 de las nacionalidad con más obras de arte, son:")
+    print(lt.getElement(orden,lt.size(orden)))
+    print(lt.getElement(orden,lt.size(orden)-1))
+    print(lt.getElement(orden,lt.size(orden)-2))
+    print(lt.getElement(orden,lt.size(orden)-3))
+    print(lt.getElement(orden,lt.size(orden)-4))
+    print(lt.getElement(orden,lt.size(orden)-5))
+    print(lt.getElement(orden,lt.size(orden)-6))
+    print(lt.getElement(orden,lt.size(orden)-7))
+    print(lt.getElement(orden,lt.size(orden)-8))
+    print(lt.getElement(orden,lt.size(orden)-9))
+    print("*"*50)
+
+    n = 1
+    print("Las obras pertenecientes al top 1 son: ")
+    while n <= lt.size(obras_top):
+        obra = lt.getElement(obras_top,n)
+        print("*"*50)
+        print("Titulo : ", obra["Title"])
+
+        ids=obra["ConstituentID"]
+        ids=ids.replace(']','').replace('[','').split(',')
+        for id in ids:
+            aux = ""
+            n=0
+            while (lt.size(catalogo["Artista"])>n) and (aux!=id):
+                artista = lt.getElement(catalogo,n)
+                aux = artista["ConstituentID"]
+                if aux == id:
+                    print("Artista : ", artista["DisplayName"])
+
+        print("Fecha de la obra : ", obra["Date"])
+        print("Medio : ", obra["Medium"])
+        print("Dimensiones : ", obra["Dimensions"])
+        n += 1
+
 
 def ejecutar_departmentartworks(catalogo):
     departamento = input("Ingrese el departamento a transportar: ")
