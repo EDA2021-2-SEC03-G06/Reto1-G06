@@ -49,7 +49,92 @@ def printMenu():
     print("0- Salir")
 
 catalogo = None
+def viewdateartwork():
+            año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
+            año_final = int(input("Ingrese el año en el que desea terminar: "))
+            total_obras, purchase, primeras_3,ultimas_3 = controller.initdateartwork(año_inicio,año_final,catalogo)
+            print("En esas fechas ubo: ",total_obras," obras")
+            print("De esas obras ",purchase," fueron compradas")
+            print("¡¡PRIMEROS 3!!")
+            posicion = 1
+            while posicion <= lt.size(primeras_3):
+                obra = lt.getElement(primeras_3,posicion)
+                print("*"*50)
+                print("Titulo : ", obra["Title"])
+                print("Fecha : ", obra["Date"])
+                print("Medio : ", obra["Medium"])
+                print("Dimensiones : ",obra["Dimensions"])
+                posicion += 1
+            posicion = 1
+            print("¡¡ULTIMAS 3!!")
+            while posicion <= lt.size(ultimas_3):
+                obra = lt.getElement(ultimas_3,posicion)
+                print("*"*50)
+                print("Titulo : ",obra["Title"])
+                print("Fecha : ",obra["Date"])
+                print("Medio : ",obra["Medium"])
+                print("Dimensiones : ",obra["Dimensions"])
+                posicion += 1
 
+def viewartworkvartist():
+            nombre_artista = input("Ingrese el nombre del artista: ")
+            total_obras,total_tecnicas,tecnica_usada,obras_tecnica = controller.initArtworkvArtist(nombre_artista,catalogo)
+            print(nombre_artista," hizo ",total_obras," obras")
+            print(nombre_artista," uso ", total_tecnicas," tecnicas")
+            print(nombre_artista," usaba mayormente ",tecnica_usada," como tecnica")
+            posicion = 0
+            while posicion < lt.size(obras_tecnica):
+                obra = lt.getElement(obras_tecnica,posicion)
+                print("*"*25)
+                print("Titulo : ",obra["Title"])
+                print("Fecha : ",obra["Date"])
+                print("Medio : ",obra["Medium"])
+                print("Dimensiones : ",obra["Dimensions"])
+                posicion += 1
+
+def viewnuevaexpo():
+    año_inicio = int(input("En que año desea iniciar: "))
+    año_fin = int(input("En que año desea terminar: "))
+    area = float(input("Con cuanta area cuenta: "))
+    total_obras,area_usada,primeras_5,ultimas_5 = controller.initnuevaexpo(catalogo,año_inicio,año_fin,area)
+    print("La exposicion tendria ",total_obras," en total")
+    print("La exposicion usarias ", area_usada, "m**2")
+    print("¡¡¡PRIMERAS 5!!!")
+    posicion = 1
+    while posicion <= lt.size(primeras_5):
+        obra = lt.getElement(primeras_5,posicion)
+        print("*"*50)
+        print("Titulo : ", obra["Title"])
+        print("Artista: ", controller.encontrar_artista(catalogo,obra["ConstituentID"]))
+        print("Fecha : ", obra["Date"])
+        print("Clasificacion: ", obra["Classification"])
+        print("Medio : ", obra["Medium"])
+        print("Dimensiones : ",obra["Dimensions"])
+        posicion += 1
+    posicion = 1
+    print("¡¡ULTIMAS 5!!")
+    while posicion <= lt.size(ultimas_5):
+        obra = lt.getElement(ultimas_5,posicion)
+        print("*"*50)
+        print("Titulo : ", obra["Title"])
+        print("Artista: ", controller.encontrar_artista(catalogo,obra["ConstituentID"]))
+        print("Fecha : ", obra["Date"])
+        print("Clasificacion: ", obra["Classification"])
+        print("Medio : ", obra["Medium"])
+        print("Dimensiones : ",obra["Dimensions"])
+        posicion += 1
+
+def viewsort():
+    print("¿Que Algoritmo desea utilizar?")
+    print("1- Insertion Sort")
+    print("2- Merge Sort")
+    print("3- Quick Sort")
+    print("4- Shell Sort")
+    ordenamiento = int(input("Ingrese el algoritmo que le interesa: "))
+    size = int(input("Cuantos datos le interesa tomar: "))
+    time, sorted_list = controller.initordenamientodataAdquire(catalogo,ordenamiento,size)
+    print("El resultado fue:\n",sorted_list)
+    print("El proceso tardo: ", time, "ms")
 """
 Menu principal
 """
@@ -76,90 +161,13 @@ while True:
         print(controller.initdateartist(año_inicio,año_final,catalogo))
     
     elif int(inputs) == 3:
-        año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
-        año_final = int(input("Ingrese el año en el que desea terminar: "))
-        total_obras, purchase, primeras_3,ultimas_3 = controller.initdateartwork(año_inicio,año_final,catalogo)
-        print("En esas fechas ubo: ",total_obras," obras")
-        print("De esas obras ",purchase," fueron compradas")
-        print("¡¡PRIMEROS 3!!")
-        posicion = 1
-        while posicion <= lt.size(primeras_3):
-            obra = lt.getElement(primeras_3,posicion)
-            print("*"*50)
-            print("Titulo : ", obra["Title"])
-            print("Fecha : ", obra["Date"])
-            print("Medio : ", obra["Medium"])
-            print("Dimensiones : ",obra["Dimensions"])
-            posicion += 1
-        posicion = 1
-        print("¡¡ULTIMAS 3!!")
-        while posicion <= lt.size(ultimas_3):
-            obra = lt.getElement(ultimas_3,posicion)
-            print("*"*50)
-            print("Titulo : ",obra["Title"])
-            print("Fecha : ",obra["Date"])
-            print("Medio : ",obra["Medium"])
-            print("Dimensiones : ",obra["Dimensions"])
-            posicion += 1
+        viewdateartwork()
     elif int(inputs) == 4:
-        nombre_artista = input("Ingrese el nombre del artista: ")
-        total_obras,total_tecnicas,tecnica_usada,obras_tecnica = controller.initArtworkvArtist(nombre_artista,catalogo)
-        print(nombre_artista," hizo ",total_obras," obras")
-        print(nombre_artista," uso ", total_tecnicas," tecnicas")
-        print(nombre_artista," usaba mayormente ",tecnica_usada," como tecnica")
-        posicion = 0
-        while posicion < lt.size(obras_tecnica):
-            obra = lt.getElement(obras_tecnica,posicion)
-            print("*"*25)
-            print("Titulo : ",obra["Title"])
-            print("Fecha : ",obra["Date"])
-            print("Medio : ",obra["Medium"])
-            print("Dimensiones : ",obra["Dimensions"])
-            posicion += 1
-    
+        viewartworkvartist()
     elif int(inputs) == 7:
-        año_inicio = int(input("En que año desea iniciar: "))
-        año_fin = int(input("En que año desea terminar: "))
-        area = float(input("Con cuanta area cuenta: "))
-        total_obras,area_usada,primeras_5,ultimas_5 = controller.initnuevaexpo(catalogo,año_inicio,año_fin,area)
-        print("La exposicion tendria ",total_obras," en total")
-        print("La exposicion usarias ", area_usada, "m**2")
-        print("¡¡¡PRIMERAS 5!!!")
-        posicion = 1
-        while posicion <= lt.size(primeras_5):
-            obra = lt.getElement(primeras_5,posicion)
-            print("*"*50)
-            print("Titulo : ", obra["Title"])
-            print("Artista: ", controller.encontrar_artista(catalogo,obra["ConstituentID"]))
-            print("Fecha : ", obra["Date"])
-            print("Clasificacion: ", obra["Classification"])
-            print("Medio : ", obra["Medium"])
-            print("Dimensiones : ",obra["Dimensions"])
-            posicion += 1
-        posicion = 1
-        print("¡¡ULTIMAS 5!!")
-        while posicion <= lt.size(ultimas_5):
-            obra = lt.getElement(ultimas_5,posicion)
-            print("*"*50)
-            print("Titulo : ", obra["Title"])
-            print("Artista: ", controller.encontrar_artista(catalogo,obra["ConstituentID"]))
-            print("Fecha : ", obra["Date"])
-            print("Clasificacion: ", obra["Classification"])
-            print("Medio : ", obra["Medium"])
-            print("Dimensiones : ",obra["Dimensions"])
-            posicion += 1
-
+        viewnuevaexpo()
     elif int(inputs) == 8:
-        print("¿Que Algoritmo desea utilizar?")
-        print("1- Insertion Sort")
-        print("2- Merge Sort")
-        print("3- Quick Sort")
-        print("4- Shell Sort")
-        ordenamiento = int(input("Ingrese el algoritmo que le interesa: "))
-        size = int(input("Cuantos datos le interesa tomar: "))
-        time, sorted_list = controller.initordenamientodataAdquire(catalogo,ordenamiento,size)
-        print("El resultado fue:\n",sorted_list)
-        print("El proceso tardo: ", time, "ms")
+        viewsort()
     else:
         sys.exit(0)
 sys.exit(0)
