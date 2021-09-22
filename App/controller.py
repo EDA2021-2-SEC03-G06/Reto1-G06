@@ -1,4 +1,4 @@
-"""
+﻿"""
  * Copyright 2020, Departamento de sistemas y Computación,
  * Universidad de Los Andes
  *
@@ -64,3 +64,7 @@ def initdateartwork(año_inicio,año_final,catalogo):
     return model.dateArtwork(año_inicio,año_final,catalogo)
 def initArtworkvArtist(nombre_artista,catalogo):
     return model.ArtworkvArtist(nombre_artista,catalogo)
+def initArtwokvNationality(catalogo):
+    return model.ArtworkvNacionality(catalogo)
+def initdepartmentArtworks(catalogo,departamento):
+    return model.departmentArtworks(catalogo,departamento)

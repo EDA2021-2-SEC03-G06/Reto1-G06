@@ -48,6 +48,52 @@ def printMenu():
     print("8- Organizar una muestra de obras por fecha")
     print("0- Salir")
 
+
+"""
+Ejecución de funciones
+"""
+def ejecutar_dateartist(catalogo):
+    año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
+    año_final = int(input("Ingrese el año en el que desea terminar: "))
+    cantidad,primeros_3,ultimos_3 = controller.initdateartist(año_inicio,año_final,catalogo)
+    print("En ese rango de años nacieron un total de: ",cantidad," artistas.")
+    print("Los primeros 3 en nacer fueron:")
+    n = 1
+    while n <= lt.size(primeros_3):
+        artista = lt.getElement(primeros_3,n)
+        print("*"*50)
+        print("Nombre : ", artista["DisplayName"])
+        print("Fecha de Nacimiento : ", artista["BeginDate"])
+        death = artista["EndDate"]
+        if artista["EndDate"]== "0":
+            death = "Desconocida"
+        print("Fecha de Fallecimiento : ",death)
+        print("Nacionalidad : ", artista["Nationality"])
+        print("Género : ", artista["Gender"])
+        n += 1
+    n = 1
+    print("Los últimos 3 en nacer fueron:")
+    while n <= lt.size(ultimos_3):
+        artista = lt.getElement(ultimos_3,n)
+        print("*"*50)
+        print("Nombre : ", artista["DisplayName"])
+        print("Fecha de nacimiento : ", artista["BeginDate"])
+        death = "Fecha de Fallecimiento : ", artista["EndDate"]
+        if artista["EndDate"]== "0":
+            death = "Fecha de Fallecimiento : Desconocida"
+        print(death)
+        print("Nacionalidad : ", artista["Nationality"])
+        print("Género : ", artista["Gender"])
+        n += 1
+
+def ejecutar_nacionalidad(catalogo):
+    print(controller.initArtwokvNationality(catalogo))
+
+def ejecutar_departmentartworks(catalogo):
+    departamento = input("Ingrese el departamento a transportar: ")
+    print(controller.initdepartmentArtworks(catalogo,departamento))
+
+
 catalogo = None
 
 """
@@ -71,15 +117,13 @@ while True:
         print("Se cargaron " + str(lt.size(catalogo["Obra"]))+" obras")
     
     elif int(inputs) == 2:
-        año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
-        año_final = int(input("Ingrese el año en el que desea terminar: "))
-        print(controller.initdateartist(año_inicio,año_final,catalogo))
+        print(ejecutar_dateartist(catalogo))
     
     elif int(inputs) == 3:
         año_inicio = int(input("Ingrese el año en el que desea iniciar: "))
         año_final = int(input("Ingrese el año en el que desea terminar: "))
         total_obras, purchase, primeras_3,ultimas_3 = controller.initdateartwork(año_inicio,año_final,catalogo)
-        print("En esas fechas ubo: ",total_obras," obras")
+        print("En esas fechas hubo: ",total_obras," obras")
         print("De esas obras ",purchase," fueron compradas")
         print("¡¡PRIMEROS 3!!")
         posicion = 1
@@ -116,6 +160,11 @@ while True:
             print("Dimensiones : ",obra["Dimensions"])
             posicion += 1
     
+    elif int(inputs) == 5:
+        print(ejecutar_nacionalidad(catalogo))
+
+    elif int(inputs) == 6:
+        print(ejecutar_departmentartworks(catalogo))
     
     elif int(inputs) == 8:
         print("¿Que Algoritmo desea utilizar?")

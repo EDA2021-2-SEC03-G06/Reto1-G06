@@ -87,19 +87,82 @@ def ArtworkvArtist(nombre_artista,catalogo):
             nombre = llave
     return (total_obras,total_medios,nombre,obras_artista[nombre])
     
+
+
+def ArtworkvNacionality(catalogo):
+    
+    cat_obras = catalogo["Obra"]
+    cat_artistas = catalogo["Artista"]
+    size = lt.size(cat_obras)
+    obras_nacionalidad = {}
+    pos = 1
+
+    
+    while pos<=20:
+        obra = lt.getElement(cat_obras,pos)
+        ID_artista = str(obra["ConstituentID"])[1:-1]
+        nacionalidad = nationality_artist(cat_artistas,ID_artista)
+        if nacionalidad not in obras_nacionalidad:
+            obras_nacionalidad[nacionalidad] = lt.newList()
+        lt.addLast(obras_nacionalidad[nacionalidad],obra)
+        print("se cargó " + nacionalidad)
+        pos+=1
+
+    
+    
+    orden=lt.newList()
+    repe=lt.newList("ARRAY_LIST")
+    mayor=1000000
+    n=1
+    llave=""
+    
+    while n<=10:
+        anterior = mayor
+        aux=0
+        pais = ""
+        for i in obras_nacionalidad:
+            valor =lt.size(obras_nacionalidad[i])
+            if aux <= valor and (i not in repe['elements']):
+                mayor = valor
+                aux = valor
+                llave = "top " + str(n)
+                pais = i
+                orden[pais]=valor
+        lt.addLast(repe,pais)
+        n+=1
+    
+
+    
+    return obras_nacionalidad,orden, repe
+
+
 # Funciones de consulta
 def dateartist(año_inicio,año_final,catalogo):
     aux = catalogo["Artista"]
     artistas_rango = lt.newList()
+    size = lt.size(aux)
     cantidad = 0
     n = 0
 
-    while n < 14:
-        artista= lt.getElement(aux,n)
+    while n < size:
+        artista = lt.getElement(aux,n)
         nacimiento = int(artista["BeginDate"])
-        lt.addLast(artistas_rango,nacimiento)
+        if año_inicio<=nacimiento<=año_final:
+            lt.addLast(artistas_rango,artista)
+            cantidad+=1
         n+=1
-    return artistas_rango
+    
+    artistas_sorted = merge_sort(artistas_rango,cantidad,compareBeginDate)
+    artistas_sorted = artistas_sorted[1]
+    primeros_3 = lt.newList()
+    lt.addLast(primeros_3,lt.getElement(artistas_sorted,lt.size(artistas_sorted)))
+    lt.addLast(primeros_3,lt.getElement(artistas_sorted,lt.size(artistas_sorted)-1))
+    lt.addLast(primeros_3,lt.getElement(artistas_sorted,lt.size(artistas_sorted)-2))
+    ultimos_3 = lt.newList()
+    lt.addLast(ultimos_3,lt.getElement(artistas_sorted,2))
+    lt.addLast(ultimos_3,lt.getElement(artistas_sorted,1))
+    lt.addLast(ultimos_3,lt.getElement(artistas_sorted,0))
+    return(cantidad,primeros_3,ultimos_3)
 
 
 
@@ -131,18 +194,145 @@ def dateArtwork(fecha_inicio,fecha_fin,catalogo):
     lt.addLast(primeras_3,lt.getElement(obras_sorted,0))
     return(tamaño, obras_purchase,primeras_3,ultimos_3)
 
+
+def nationality_artist(catalogo,id):
+    nacionalidad = ""
+    aux = ""
+    n=0
+    while (lt.size(catalogo)>n) and (aux!=id):
+        artista = lt.getElement(catalogo,n)
+        aux = artista["ConstituentID"]
+        if aux == id:
+            nacionalidad = artista["Nationality"]
+        n+=1
+
+    return nacionalidad
+
+"""
+def cantidad_artista(catalogo,id):
+    n = 0
+    pos = 0
+    while (lt.size(catalogo)>pos):
+        artista = lt.getElement(catalogo,n)
+        aux = artista["ConstituentID"]
+        if aux == id:
+            nacionalidad = artista["Nationality"]
+        n+=1
+
+    return nacionalidad
+"""
+
+
+def departmentArtworks(catalogo,departamento):
+    aux = catalogo["Obra"]
+    obras_depart = lt.newList()
+    size = lt.size(aux)
+    cantidad = 0
+    n = 0
+
+    while n < size:
+        obra = lt.getElement(aux,n)
+        cmp_depart = obra["Department"]
+        if departamento==cmp_depart:
+            lt.addLast(obras_depart,obra)
+            cantidad+=1
+        n+=1
+    
+    print("se han terminado de contabilizar las obras pertenecientes al departamento: "+departamento)
+    print("se comenzará a calcular costos y pesos, por favor espere")
+
+    n = 0
+    peso_total = 0
+    costo_total = 0
+    dimensiones = lt.newList()
+    size = lt.size(obras_depart)
+    while  n < size:
+        obra = lt.getElement(obras_depart,n)
+        costo_medida = 0
+        costo_peso = 0
+        costo_obra = 0
+        medidas = 1
+        if obra["Weight (kg)"] != "":
+            peso_obra = float(obra["Weight  (kg)"])
+            costo_peso = peso_obra*72
+            peso_total += peso_obra
+
+        if obra["Height (cm)"] != "":
+            medida = float(obra["Height (cm)"])/100
+            lt.addLast(dimensiones,medida)
+        elif obra["Length (cm)"] != "":
+            medida = float(obra["Length (cm)"])/100
+            lt.addLast(dimensiones,medida)
+        elif obra["Width (cm)"] != "":
+            medida = float(obra["Width (cm)"])/100
+            lt.addLast(dimensiones,medida)
+        lt.addLast(dimensiones,1)
+
+        for i in range(lt.size(dimensiones)):
+            medidas*= lt.getElement(dimensiones,i)
+        if medidas!=1:
+            costo_medida = medidas*72
+        
+        costos=lt.newList()
+        lt.addLast(costos,48)
+        lt.addLast(costos,costo_peso)
+        lt.addLast(costos,costo_medida)
+        for i in range(lt.size(costos)):
+            if lt.getElement(costos,i) > costo_obra:
+                costo_obra=lt.getElement(costos,i)
+        costo_total+=costo_obra
+        obra["costo"]=costo_obra
+        
+
+        n+=1
+    print(obra["costo"])
+    obras_sorted = merge_sort(obras_depart,cantidad,compareData)
+    obras_sorted = obras_sorted[1]
+    antiguas_5 = lt.newList()
+    lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)))
+    lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-1))
+    lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-2))
+    lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-3))
+    lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-4))
+    """
+    obras_sorted = merge_sort(obras_depart,cantidad,comparePrice)
+    obras_sorted = obras_sorted[1]
+    costosas_5 = lt.newList()
+    lt.addLast(costosas_5,lt.getElement(obras_sorted,4))
+    lt.addLast(costosas_5,lt.getElement(obras_sorted,3))
+    lt.addLast(costosas_5,lt.getElement(obras_sorted,2))
+    lt.addLast(costosas_5,lt.getElement(obras_sorted,1))
+    lt.addLast(costosas_5,lt.getElement(obras_sorted,0))
+    """
+    
+
+    return obras_sorted
 # Funciones utilizadas para comparar elementos dentro de una lista
+def compareSize(obra1,obra2):
+    orden = (lt.size(obra1) > lt.size(obra2))
+    return orden
+
+def compareBeginDate(obra1,obra2):
+    orden = None
+    if (obra1["BeginDate"]!="") and (obra2["BeginDate"]!=""):
+        orden = (int(obra1["BeginDate"]) > int(obra2["BeginDate"]))
+    return orden
+
+def comparePrice(obra1,obra2):
+    orden = (int(obra1["costo"]) > int(obra2["costo"]))
+    return orden
+
 def compareDateAcquired(obra1,obra2):
+    orden = None
     if (obra1["DateAcquired"]!="") and (obra2["DateAcquired"]!=""):
-        return (dt.datetime.strptime(obra1["DateAcquired"],"%Y-%m-%d") > dt.datetime.strptime(obra2["DateAcquired"],"%Y-%m-%d"))
-    else:
-        return None
+        orden = (dt.datetime.strptime(obra1["DateAcquired"],"%Y-%m-%d") > dt.datetime.strptime(obra2["DateAcquired"],"%Y-%m-%d"))
+    return orden
 
 def compareData(obra1,obra2):
+    orden = None
     if (obra1["Date"]!="") and (obra2["Date"]!=""):
-        return (int(obra1["Date"]) > int(obra2["Date"]))
-    else:
-        return None
+        orden = (int(obra1["Date"]) > int(obra2["Date"]))
+    return orden
 # Funciones de ordenamiento
 def insertion_sort(catalogo,size,cmpfuncion):
     sub_list = lt.subList(catalogo, 1, size)
