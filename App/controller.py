@@ -68,3 +68,11 @@ def initArtwokvNationality(catalogo):
     return model.ArtworkvNacionality(catalogo)
 def initdepartmentArtworks(catalogo,departamento):
     return model.departmentArtworks(catalogo,departamento)
+def encontrar_artista(catalogo,Constituen_ID):
+    ConstituenID = Constituen_ID.replace("]","")
+    ConstituenID = ConstituenID.replace("[","")
+    return model.encontrar_artista(catalogo,ConstituenID)
+def initArtwokvNationality(catalogo):
+    return model.ArtworkvNacionality(catalogo)
+def initdepartmentArtworks(catalogo,departamento):
+    return model.departmentArtworks(catalogo,departamento)
