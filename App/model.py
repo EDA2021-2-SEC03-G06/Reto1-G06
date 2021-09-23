@@ -253,7 +253,7 @@ def departmentArtworks(catalogo,departamento):
     peso_total = 0
     costo_total = 0
     size = lt.size(obras_depart)
-    while  n < size:
+    while  n <= size:
         obra = lt.getElement(obras_depart,n)
         dimensiones = lt.newList()
         costo_medida = 1
@@ -286,6 +286,15 @@ def departmentArtworks(catalogo,departamento):
         lt.addLast(costos,costo_medida)
         if (lt.size(dimensiones)==1) and (costo_peso == 0):
             lt.addLast(costos,48)
+
+        if (lt.size(dimensiones)==1) and (obra["Diameter (cm)"]!=""):
+            area_volumen =3.14*((float(obra["Diameter (cm)"])/200)^2)
+            if obra["Height (cm)"]!="":
+                area_volumen = area_volumen*(float(obra["Height (cm)"])/100)
+            costo_circular = area_volumen*72
+        lt.addLast(costos,costo_circular)
+                
+        
 
         for i in range(lt.size(costos)+1):
             if lt.getElement(costos,i) > costo_obra:
@@ -321,7 +330,7 @@ def departmentArtworks(catalogo,departamento):
     
     
 
-    return None
+    return costosas_5
 
 def nueva_expo(catalogo,año_inicio,año_fin,area):
     obras_expo = lt.newList()
