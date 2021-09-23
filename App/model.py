@@ -238,7 +238,7 @@ def departmentArtworks(catalogo,departamento):
     cantidad = 0
     n = 0
 
-    while n < 100:
+    while n <= size:
         obra = lt.getElement(aux,n)
         cmp_depart = obra["Department"]
         if departamento==cmp_depart:
