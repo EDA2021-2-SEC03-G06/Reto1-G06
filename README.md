@@ -16,3 +16,12 @@ Este directorio contiene todo el código de base que se entrega para el funciona
 -Test
 Este directorio contiene las pruebas realizadas a los TADs, Estructuras de Datos y Algoritmos.
 
+Requerimiento 3
+Nombre: Sergio Montoya Ramirez
+Correo: s.montoyar2@uniandes.edu.co
+Código: 202112171
+
+Requerimiento 4
+Nombre: Sergio David López Becerra
+Correo: sd.lopezb1@uniandes.edu.co
+Código: 202110260
