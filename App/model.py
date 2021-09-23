@@ -238,7 +238,7 @@ def departmentArtworks(catalogo,departamento):
     cantidad = 0
     n = 0
 
-    while n < size:
+    while n < 100:
         obra = lt.getElement(aux,n)
         cmp_depart = obra["Department"]
         if departamento==cmp_depart:
@@ -252,11 +252,11 @@ def departmentArtworks(catalogo,departamento):
     n = 0
     peso_total = 0
     costo_total = 0
-    dimensiones = lt.newList()
     size = lt.size(obras_depart)
     while  n < size:
         obra = lt.getElement(obras_depart,n)
-        costo_medida = 0
+        dimensiones = lt.newList()
+        costo_medida = 1
         costo_peso = 0
         costo_obra = 0
         medidas = 1
@@ -268,32 +268,39 @@ def departmentArtworks(catalogo,departamento):
         if obra["Height (cm)"] != "":
             medida = float(obra["Height (cm)"])/100
             lt.addLast(dimensiones,medida)
-        elif obra["Length (cm)"] != "":
+        if obra["Length (cm)"] != "":
             medida = float(obra["Length (cm)"])/100
             lt.addLast(dimensiones,medida)
-        elif obra["Width (cm)"] != "":
+        if obra["Width (cm)"] != "":
             medida = float(obra["Width (cm)"])/100
             lt.addLast(dimensiones,medida)
         lt.addLast(dimensiones,1)
 
-        for i in range(lt.size(dimensiones)):
-            medidas*= lt.getElement(dimensiones,i)
-        if medidas!=1:
-            costo_medida = medidas*72
-        
+        if lt.size(dimensiones) != 1:
+            for i in range(lt.size(dimensiones)):
+                medidas*= lt.getElement(dimensiones,i)
+                costo_medida = medidas*72
+
         costos=lt.newList()
-        lt.addLast(costos,48)
         lt.addLast(costos,costo_peso)
         lt.addLast(costos,costo_medida)
-        for i in range(lt.size(costos)):
+        if (lt.size(dimensiones)==1) and (costo_peso == 0):
+            lt.addLast(costos,48)
+
+        for i in range(lt.size(costos)+1):
             if lt.getElement(costos,i) > costo_obra:
                 costo_obra=lt.getElement(costos,i)
         costo_total+=costo_obra
+        if costo_obra==0:
+            costo_obra=48
         obra["costo"]=costo_obra
-        
 
+        
         n+=1
-    print(obra["costo"])
+    for i in range(lt.size(obras_depart)+1):
+        obra=lt.getElement(obras_depart,i)
+        print(obra["costo"])
+
     obras_sorted = merge_sort(obras_depart,cantidad,compareData)
     obras_sorted = obras_sorted[1]
     antiguas_5 = lt.newList()
@@ -302,7 +309,7 @@ def departmentArtworks(catalogo,departamento):
     lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-2))
     lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-3))
     lt.addLast(antiguas_5,lt.getElement(obras_sorted,lt.size(obras_sorted)-4))
-    """
+    
     obras_sorted = merge_sort(obras_depart,cantidad,comparePrice)
     obras_sorted = obras_sorted[1]
     costosas_5 = lt.newList()
@@ -311,10 +318,11 @@ def departmentArtworks(catalogo,departamento):
     lt.addLast(costosas_5,lt.getElement(obras_sorted,2))
     lt.addLast(costosas_5,lt.getElement(obras_sorted,1))
     lt.addLast(costosas_5,lt.getElement(obras_sorted,0))
-    """
+    
     
 
-    return obras_sorted
+    return None
+
 def nueva_expo(catalogo,año_inicio,año_fin,area):
     obras_expo = lt.newList()
     area_restante = area

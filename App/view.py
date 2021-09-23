@@ -246,6 +246,10 @@ while True:
         viewdateartwork()
     elif int(inputs) == 4:
         viewartworkvartist()
+    elif int(inputs) == 5:
+        ejecutar_nacionalidad(catalogo)
+    elif  int(inputs) == 6:
+        ejecutar_departmentartworks(catalogo)
     elif int(inputs) == 7:
         viewnuevaexpo()
     elif int(inputs) == 8:
