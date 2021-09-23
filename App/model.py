@@ -330,7 +330,7 @@ def departmentArtworks(catalogo,departamento):
     
     
 
-    return costosas_5
+    return cantidad,costo_total,peso_total,antiguas_5,costosas_5
 
 def nueva_expo(catalogo,año_inicio,año_fin,area):
     obras_expo = lt.newList()

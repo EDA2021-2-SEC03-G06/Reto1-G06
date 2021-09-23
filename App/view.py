@@ -114,12 +114,13 @@ def ejecutar_nacionalidad(catalogo):
         ids=ids.replace(']','').replace('[','').split(',')
         for id in ids:
             aux = ""
-            n=0
-            while (lt.size(catalogo["Artista"])>n) and (aux!=id):
-                artista = lt.getElement(catalogo,n)
+            n2=0
+            while (lt.size(catalogo["Artista"])>n2) and (aux!=id):
+                artista = lt.getElement(catalogo,n2)
                 aux = artista["ConstituentID"]
                 if aux == id:
                     print("Artista : ", artista["DisplayName"])
+                n2+=1
 
         print("Fecha de la obra : ", obra["Date"])
         print("Medio : ", obra["Medium"])
@@ -129,7 +130,54 @@ def ejecutar_nacionalidad(catalogo):
 
 def ejecutar_departmentartworks(catalogo):
     departamento = input("Ingrese el departamento a transportar: ")
-    print(controller.initdepartmentArtworks(catalogo,departamento))
+    cantidad,costo_total,peso_total,antiguas_5,costosas_5 = controller.initdepartmentArtworks(catalogo,departamento)
+    print("la cantidad de obras del departamento "+departamento+"que se han de transportar son "+cantidad)
+    print("Valor promedio (USD): "+costo_total)
+    print("Las 5 obras más antiguas son: ")
+    n=1
+    while n <= lt.size(antiguas_5):
+        obra = lt.getElement(antiguas_5,n)
+        print("*"*50)
+        print("Titulo : ", obra["Title"])
+        ids=obra["ConstituentID"]
+        ids=ids.replace(']','').replace('[','').split(',')
+        for id in ids:
+            aux = ""
+            n2=0
+            while (lt.size(catalogo["Artista"])>n2) and (aux!=id):
+                artista = lt.getElement(catalogo,n2)
+                aux = artista["ConstituentID"]
+                if aux == id:
+                    print("Artista : ", artista["DisplayName"])
+                n2+=1
+        print("Fecha de la obra : ", obra["Date"])
+        print("Medio : ", obra["Medium"])
+        print("Dimensiones : ", obra["Dimensions"])
+        print("Costo : ", obra["costo"])
+        n += 1
+    print("Las 5 obras más costosas son: ")
+    n=1
+    while n <= lt.size(antiguas_5):
+        obra = lt.getElement(antiguas_5,n)
+        print("*"*50)
+        print("Titulo : ", obra["Title"])
+        ids=obra["ConstituentID"]
+        ids=ids.replace(']','').replace('[','').split(',')
+        for id in ids:
+            aux = ""
+            n2=0
+            while (lt.size(catalogo["Artista"])>n2) and (aux!=id):
+                artista = lt.getElement(catalogo,n2)
+                aux = artista["ConstituentID"]
+                if aux == id:
+                    print("Artista : ", artista["DisplayName"])
+                n2+=1
+        print("Fecha de la obra : ", obra["Date"])
+        print("Medio : ", obra["Medium"])
+        print("Dimensiones : ", obra["Dimensions"])
+        print("Costo : ", obra["costo"])
+        n += 1
+        
 
 
 catalogo = None
